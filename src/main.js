@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { fromJS } from 'immutable';
 import { useRouterHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+
 import makeRoutes from './routes';
 import Root from './containers/Root';
 import configureStore from './redux/configureStore';
+import { selectLocationState } from './redux/modules/router.js';
 
 // Configure history for react-router
 const browserHistory = useRouterHistory(createBrowserHistory)({
@@ -16,10 +19,10 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
 // react-router-redux reducer under the key "router" in src/routes/index.js,
 // so we need to provide a custom `selectLocationState` to inform
 // react-router-redux of its location.
-const initialState = window.__INITIAL_STATE__;
+const initialState = fromJS(window.__INITIAL_STATE__ || {});
 const store = configureStore(initialState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: (state) => state.router
+  selectLocationState
 });
 
 // Now that we have the Redux store, we can create our routes. We provide

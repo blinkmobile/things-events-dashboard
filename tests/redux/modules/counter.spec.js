@@ -1,7 +1,9 @@
+import { Map } from 'immutable';
 import {
   COUNTER_INCREMENT,
   increment,
   doubleAsync,
+  getCounter,
   default as counterReducer
 } from 'redux/modules/counter';
 
@@ -55,14 +57,13 @@ describe('(Redux Module) Counter', function () {
     let _getStateSpy;
 
     beforeEach(function () {
-      _globalState = {
+      _globalState = Map({
         counter: counterReducer(undefined, {})
-      };
+      });
       _dispatchSpy = sinon.spy((action) => {
-        _globalState = {
-          ..._globalState,
-          counter: counterReducer(_globalState.counter, action)
-        };
+        _globalState = _globalState.merge({
+          counter: counterReducer(getCounter(_globalState), action)
+        });
       });
       _getStateSpy = sinon.spy(() => {
         return _globalState;
@@ -90,19 +91,19 @@ describe('(Redux Module) Counter', function () {
     });
 
     it('Should produce a state that is double the previous state.', function () {
-      _globalState = { counter: 2 };
+      _globalState = Map({ counter: 2 });
 
       return doubleAsync()(_dispatchSpy, _getStateSpy)
         .then(() => {
           _dispatchSpy.should.have.been.calledOnce;
           _getStateSpy.should.have.been.calledOnce;
-          expect(_globalState.counter).to.equal(4);
+          expect(getCounter(_globalState)).to.equal(4);
           return doubleAsync()(_dispatchSpy, _getStateSpy);
         })
         .then(() => {
           _dispatchSpy.should.have.been.calledTwice;
           _getStateSpy.should.have.been.calledTwice;
-          expect(_globalState.counter).to.equal(8);
+          expect(getCounter(_globalState)).to.equal(8);
         });
     });
   });

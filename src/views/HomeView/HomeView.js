@@ -1,7 +1,10 @@
 /* @flow */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { increment, doubleAsync } from '../../redux/modules/counter';
+
+import {
+  increment, doubleAsync, getCounter
+} from '../../redux/modules/counter';
 import DuckImage from './Duck.jpg';
 import classes from './HomeView.scss';
 
@@ -58,7 +61,7 @@ export class HomeView extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  counter: getCounter(state)
 });
 export default connect(mapStateToProps, {
   increment: () => increment(1),

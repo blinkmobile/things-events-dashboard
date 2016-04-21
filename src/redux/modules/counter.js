@@ -1,4 +1,7 @@
 /* @flow */
+
+export const getCounter = (state) => state.get('counter');
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -29,7 +32,7 @@ export const doubleAsync = (): Function => {
   return (dispatch: Function, getState: Function): Promise => {
     return new Promise((resolve: Function): void => {
       setTimeout(() => {
-        dispatch(increment(getState().counter));
+        dispatch(increment(getCounter(getState())));
         resolve();
       }, 200);
     });
@@ -57,3 +60,4 @@ export default function counterReducer (state: number = initialState, action: Ac
 
   return handler ? handler(state, action) : state;
 }
+
