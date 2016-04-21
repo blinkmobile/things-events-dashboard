@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "2.0.0",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "@blinkmobile/things-events-dashboard",
+  "version": "0.1.0",
+  "description": "event-powered dashboard that integrates with our \"things\" services",
   "main": "index.js",
   "engines": {
     "node": ">=4.2.0",
@@ -72,11 +72,6 @@
       }
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
-  },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
   "license": "MIT",
   "dependencies": {
     "babel-cli": "^6.5.1",
@@ -163,5 +158,21 @@
     "sinon-chai": "^2.8.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.6.0"
-  }
+  },
+  "bin": {
+    "things-events-dashboard": "compile.js"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinkmobile/things-events-dashboard.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/blinkmobile/things-events-dashboard/issues"
+  },
+  "homepage": "https://github.com/blinkmobile/things-events-dashboard#readme"
 }
