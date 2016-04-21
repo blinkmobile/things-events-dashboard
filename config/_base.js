@@ -46,7 +46,8 @@ const config = {
     'redux',
     'redux-immutable',
     'redux-thunk',
-    'reselect'
+    'reselect',
+    'whatwg-fetch'
   ],
 
   // ----------------------------------
