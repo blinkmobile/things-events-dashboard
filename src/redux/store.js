@@ -1,4 +1,4 @@
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import createHistory from 'history/lib/createHashHistory';
 import { fromJS } from 'immutable';
 import { useRouterHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -8,7 +8,7 @@ import configureStore from './configureStore.js';
 import { selectLocationState } from './modules/router.js';
 
 // Configure history for react-router
-const browserHistory = useRouterHistory(createBrowserHistory)({
+const browserHistory = useRouterHistory(createHistory)({
   basename: __BASENAME__
 });
 
