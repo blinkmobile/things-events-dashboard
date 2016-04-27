@@ -3,8 +3,12 @@
 import Chance from 'chance';
 
 import { eventReceived } from '../redux/modules/events.js';
-import { tagReceived, getTags } from '../redux/modules/tags.js';
-import { thingReceived, getThings } from '../redux/modules/things.js';
+import {
+  getTags, tagReceived, tagRemoved
+} from '../redux/modules/tags.js';
+import {
+  getThings, thingReceived, thingRemoved
+} from '../redux/modules/things.js';
 
 const chance = new Chance();
 
@@ -41,15 +45,11 @@ const HAPPENINGS = {
     const event = {
       id: '' + (new Date()).valueOf()
     };
-    console.log('newEvent', `allTagsIds.length = ${allTagsIds.length}`);
     if (!allTagsIds.length) {
       return;
     }
     // iterate over an array (length: 1 - 6) of random tag IDs
     chance.pickset(allTagsIds, chance.d6()).forEach((tagId) => {
-      if (!allTags.get(tagId)) {
-        console.log(typeof tagId, tagId, allTagsIds, allTags.has(tagId));
-      }
       const tag = allTags.get(tagId).toJS();
       event[tag.type] = event[tag.type] || [];
       event[tag.type].push(tagId);
@@ -98,6 +98,22 @@ const HAPPENINGS = {
     }));
   },
 
+  removeTag (store) {
+    const allTags = getTags(store.getState());
+    if (allTags.size) {
+      const allTagsIds = Object.keys(allTags.toJS());
+      store.dispatch(tagRemoved(chance.pickone(allTagsIds)));
+    }
+  },
+
+  removeThing (store) {
+    const allThings = getTags(store.getState());
+    if (allThings.size) {
+      const allThingsIds = Object.keys(allThings.toJS());
+      store.dispatch(thingRemoved(chance.pickone(allThingsIds)));
+    }
+  },
+
   unlinkTagFromThing (store) {
     let tag = getRandomTag(store);
     if (tag) {
@@ -112,5 +128,6 @@ export const syncStoreWithBus = (store) => {
   setInterval(() => {
     const happening = chance.pickone(Object.keys(HAPPENINGS));
     HAPPENINGS[happening](store);
+    HAPPENINGS.newEvent(store);
   }, 1e3);
 };

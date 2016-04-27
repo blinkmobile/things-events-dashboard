@@ -6,12 +6,22 @@ export const thingReceived = (thing) => ({
   type: THING_RECEIVED
 });
 
+export const THING_REMOVED = 'THING_REMOVED';
+export const thingRemoved = (thingId) => ({
+  payload: thingId,
+  type: THING_REMOVED
+});
+
 const ACTION_HANDLERS = {
   [THING_RECEIVED]: (state, { payload }) => {
     if (payload.id) {
       return state.set(payload.id, fromJS(payload));
     }
     return state; // payload is invalid, drop it
+  },
+
+  [THING_REMOVED]: (state, { payload }) => {
+    return state.delete(payload);
   }
 };
 

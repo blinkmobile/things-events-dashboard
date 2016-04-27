@@ -6,12 +6,22 @@ export const tagReceived = (tag) => ({
   type: TAG_RECEIVED
 });
 
+export const TAG_REMOVED = 'TAG_REMOVED';
+export const tagRemoved = (tagId) => ({
+  payload: tagId,
+  type: TAG_REMOVED
+});
+
 const ACTION_HANDLERS = {
   [TAG_RECEIVED]: (state, { payload }) => {
     if (payload.id) {
       return state.set(payload.id, fromJS(payload));
     }
     return state; // payload is invalid, drop it
+  },
+
+  [TAG_REMOVED]: (state, { payload }) => {
+    return state.delete(payload);
   }
 };
 
