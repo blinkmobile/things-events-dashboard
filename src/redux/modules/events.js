@@ -10,7 +10,7 @@ export const eventReceived = (event) => ({
 const ACTION_HANDLERS = {
   [EVENT_RECEIVED]: (state, { payload }) => {
     const newState = state.push(fromJS(payload));
-    return newState.size > 20 ? newState.setSize(20) : newState;
+    return newState.size > 20 ? newState.slice(-20) : newState;
   }
 };
 
