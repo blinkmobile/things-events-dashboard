@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { } from 'react';
 import { connect } from 'react-redux';
 
-// import classes from './styles.css';
+import EventLog from '../../components/EventLog/index.js';
+import classes from './styles.css';
 
 // We avoid using the `@connect` decorator on the class definition so
 // that we can export the undecorated component for testing.
@@ -9,8 +10,8 @@ import { connect } from 'react-redux';
 export class HomeView extends React.Component {
   render () {
     return (
-      <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
+      <div className={classes.self}>
+        <EventLog />
       </div>
     );
   }

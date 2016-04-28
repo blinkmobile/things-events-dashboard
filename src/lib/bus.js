@@ -144,5 +144,5 @@ export const syncStoreWithBus = (store) => {
     const happening = chance.pickone(Object.keys(HAPPENINGS));
     HAPPENINGS[happening](store);
     HAPPENINGS.newEvent(store);
-  }, 1e3);
+  }, 2e3);
 };
