@@ -4,10 +4,10 @@ import Chance from 'chance';
 
 import { eventReceived } from '../redux/modules/events.js';
 import {
-  getTags, tagReceived, tagRemoved
+  TAG_TYPES, getTags, tagReceived, tagRemoved
 } from '../redux/modules/tags.js';
 import {
-  getThings, thingReceived, thingRemoved
+  THING_TYPES, getThings, thingReceived, thingRemoved
 } from '../redux/modules/things.js';
 
 const chance = new Chance();
@@ -15,17 +15,20 @@ const chance = new Chance();
 // getRandomTag (store: Store) => Map
 const getRandomTag = (store) => {
   const tags = getTags(store.getState());
-  return tags.get(chance.pickone(tags.keys()));
+  if (!tags.size) {
+    return null;
+  }
+  return tags.get(chance.pickone(Object.keys(tags.toJS())));
 };
 
 // getRandomTag (store: Store) => Map
 const getRandomThing = (store) => {
   const things = getThings(store.getState());
-  return things.get(chance.pickone(things.keys()));
+  if (!things.size) {
+    return null;
+  }
+  return things.get(chance.pickone(Object.keys(things.toJS())));
 };
-
-const TAG_TYPES = ['beacons', 'rfids', 'rfidreaders'];
-const THING_TYPES = ['assets', 'locations', 'people'];
 
 const NEW_THINGS = {
   assets (store) {
@@ -94,19 +97,25 @@ const HAPPENINGS = {
   },
 
   newTag (store) {
-    store.dispatch(tagReceived({
-      id: '' + (new Date()).valueOf(),
-      type: chance.pickone(TAG_TYPES)
-    }));
+    const allTags = getTags(store.getState());
+    if (allTags.size < 20) {
+      store.dispatch(tagReceived({
+        id: '' + (new Date()).valueOf(),
+        type: chance.pickone(TAG_TYPES)
+      }));
+    }
   },
 
   newThing (store) {
-    NEW_THINGS[chance.pickone(THING_TYPES)](store);
+    const allThings = getTags(store.getState());
+    if (allThings.size < 20) {
+      NEW_THINGS[chance.pickone(THING_TYPES)](store);
+    }
   },
 
   removeTag (store) {
     const allTags = getTags(store.getState());
-    if (allTags.size > 20) {
+    if (allTags.size >= 20) {
       const allTagsIds = Object.keys(allTags.toJS());
       store.dispatch(tagRemoved(chance.pickone(allTagsIds)));
     }
@@ -114,7 +123,7 @@ const HAPPENINGS = {
 
   removeThing (store) {
     const allThings = getTags(store.getState());
-    if (allThings.size > 20) {
+    if (allThings.size >= 20) {
       const allThingsIds = Object.keys(allThings.toJS());
       store.dispatch(thingRemoved(chance.pickone(allThingsIds)));
     }

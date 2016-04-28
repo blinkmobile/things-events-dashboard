@@ -1,5 +1,7 @@
 import { Map, fromJS } from 'immutable';
 
+export const TAG_TYPES = ['beacons', 'rfids', 'rfidreaders'];
+
 export const TAG_RECEIVED = 'TAG_RECEIVED';
 export const tagReceived = (tag) => ({
   payload: tag,

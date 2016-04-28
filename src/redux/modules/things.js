@@ -1,5 +1,7 @@
 import { Map, fromJS } from 'immutable';
 
+export const THING_TYPES = ['assets', 'locations', 'people'];
+
 export const THING_RECEIVED = 'THING_RECEIVED';
 export const thingReceived = (thing) => ({
   payload: thing,
