@@ -3,3 +3,41 @@
   margin: 0;
   padding: 0;
 }
+
+.item {
+  display: block;
+  color: black;
+  height: 4rem;
+  opacity: 1.0;
+}
+
+.itemEnter {
+  color: red;
+  height: 0rem;
+  opacity: 0.0;
+}
+
+.itemEnterActive {
+  color: black;
+  height: 4rem;
+  opacity: 1.0;
+  transition: color 1s linear,
+              height 1s linear,
+              opacity 1s linear;
+}
+
+.itemLeave {
+  color: black;
+  height: 4rem;
+  opacity: 1.0;
+}
+
+.itemLeaveActive {
+  color: red;
+  height: 0rem;
+  opacity: 0.0;
+  transition: color 1s linear,
+              height 1s linear,
+              opacity 1s linear;
+}
+

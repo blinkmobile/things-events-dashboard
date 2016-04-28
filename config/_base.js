@@ -41,6 +41,8 @@ const config = {
     'history',
     'immutable',
     'react',
+    'react-addons-css-transition-group',
+    'react-dom',
     'react-redux',
     'react-router',
     'react-router-redux',

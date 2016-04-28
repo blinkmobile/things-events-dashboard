@@ -1,4 +1,8 @@
 .self {
   font-size: 2rem;
-  padding: .5rem;
 }
+
+.message {
+  padding: 1rem;
+}
+

@@ -3,10 +3,7 @@ import { List, Map } from 'immutable';
 import classnames from 'classnames';
 
 import { TAG_TYPES } from '../../redux/modules/tags.js';
-import { THING_TYPES } from '../../redux/modules/things.js';
 import classes from './styles.css';
-
-const types = TAG_TYPES.concat(THING_TYPES);
 
 const ENGLISH_TYPES = {
   // tag types
@@ -48,8 +45,8 @@ const eventTagsToEnglish = (event) => {
       value: links && links.size || 0
     };
   })
-    .filter((count) => count.value > 0)
-    .map((count) => `${ENGLISH_TYPES[count.type]}: ${count.value}`)
+    .filter(({ value }) => value > 0)
+    .map(({ type, value }) => `${ENGLISH_TYPES[type]}: ${value}`)
     .join('; ') || '';
 };
 
@@ -79,7 +76,7 @@ const eventToEnglish = (event) => {
 export const EventLogItem = ({ className, event }) => {
   return (
     <li className={classnames(className, classes.self)}>
-      <span>{eventToEnglish(event)}</span>
+      <span className={classes.message}>{eventToEnglish(event)}</span>
     </li>
   );
 };
