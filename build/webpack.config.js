@@ -185,7 +185,7 @@ if (isUsingCSSModules) {
     BASE_CSS_LOADER,
     'modules',
     'importLoaders=1',
-    'localIdentName=[name]_[local]_[hash:base64:5]'
+    'localIdentName=[path][name]_[local]_[hash:base64:5]'
   ].join('&');
 
   webpackConfig.module.loaders.push({
