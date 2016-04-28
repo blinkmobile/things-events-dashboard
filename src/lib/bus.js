@@ -25,7 +25,37 @@ const getRandomThing = (store) => {
 };
 
 const TAG_TYPES = ['beacons', 'rfids', 'rfidreaders'];
-// const THING_TYPES = ['assets', 'locations', 'people'];
+const THING_TYPES = ['assets', 'locations', 'people'];
+
+const NEW_THINGS = {
+  assets (store) {
+    store.dispatch(thingReceived({
+      id: '' + (new Date()).valueOf(),
+      name: chance.word(),
+      type: 'assets'
+    }));
+  },
+
+  locations (store) {
+    store.dispatch(thingReceived({
+      id: '' + (new Date()).valueOf(),
+      name: chance.street(),
+      type: 'locations'
+    }));
+  },
+
+  people (store) {
+    const firstName = chance.first();
+    const surname = chance.last();
+    store.dispatch(thingReceived({
+      id: '' + (new Date()).valueOf(),
+      firstName,
+      name: `${chance.prefix()} ${firstName} ${surname}`,
+      type: 'people',
+      surname
+    }));
+  }
+};
 
 const HAPPENINGS = {
   linkTagToThing (store) {
@@ -70,37 +100,13 @@ const HAPPENINGS = {
     }));
   },
 
-  newThingAsset (store) {
-    store.dispatch(thingReceived({
-      id: '' + (new Date()).valueOf(),
-      name: chance.word(),
-      type: 'assets'
-    }));
-  },
-
-  newThingLocation (store) {
-    store.dispatch(thingReceived({
-      id: '' + (new Date()).valueOf(),
-      name: chance.street(),
-      type: 'locations'
-    }));
-  },
-
-  newThingPerson (store) {
-    const firstName = chance.first();
-    const surname = chance.last();
-    store.dispatch(thingReceived({
-      id: '' + (new Date()).valueOf(),
-      firstName,
-      name: `${chance.prefix()} ${firstName} ${surname}`,
-      type: 'people',
-      surname
-    }));
+  newThing (store) {
+    NEW_THINGS[chance.pickone(THING_TYPES)](store);
   },
 
   removeTag (store) {
     const allTags = getTags(store.getState());
-    if (allTags.size) {
+    if (allTags.size > 20) {
       const allTagsIds = Object.keys(allTags.toJS());
       store.dispatch(tagRemoved(chance.pickone(allTagsIds)));
     }
@@ -108,7 +114,7 @@ const HAPPENINGS = {
 
   removeThing (store) {
     const allThings = getTags(store.getState());
-    if (allThings.size) {
+    if (allThings.size > 20) {
       const allThingsIds = Object.keys(allThings.toJS());
       store.dispatch(thingRemoved(chance.pickone(allThingsIds)));
     }
