@@ -1,0 +1,10 @@
+.self {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (orientation: landscape) {
+  .self {
+    flex-direction: row;
+  }
+}
