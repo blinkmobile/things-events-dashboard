@@ -1,0 +1,40 @@
+.self {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.label {
+  font-size: 4rem;
+}
+
+.value {
+  font-size: 7rem;
+  font-weight: bolder;
+}
+
+.valueEnter {
+  color: red;
+  opacity: 0.0;
+}
+
+.valueEnterActive {
+  color: black;
+  opacity: 1.0;
+  transition: color 1s linear,
+              opacity 1s linear;
+}
+
+.valueLeave {
+  color: black;
+  opacity: 1.0;
+}
+
+.valueLeaveActive {
+  color: red;
+  opacity: 0.0;
+  transition: color 1s linear,
+              opacity 1s linear;
+}
+

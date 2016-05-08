@@ -1,4 +1,5 @@
 import { Map, fromJS } from 'immutable';
+import { createSelector } from 'reselect';
 
 export const THING_TYPES = ['assets', 'locations', 'people'];
 
@@ -34,3 +35,23 @@ export const thingsReducer = (state = initialState, action) => {
 };
 
 export const getThings = (state) => state.get('things') || initialState;
+
+export const countThingsByType = createSelector(
+  [getThings],
+  (things) => things.countBy((thing) => thing.get('type'))
+);
+
+export const countThingsAssets = createSelector(
+  [countThingsByType],
+  (counts) => counts.get('assets') || 0
+);
+
+export const countThingsLocations = createSelector(
+  [countThingsByType],
+  (counts) => counts.get('locations') || 0
+);
+
+export const countThingsPeople = createSelector(
+  [countThingsByType],
+  (counts) => counts.get('people') || 0
+);

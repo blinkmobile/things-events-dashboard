@@ -1,5 +1,15 @@
 .self {}
 
+.counters {
+  align-items: center;
+  justify-content: space-around;
+}
+
+.counter {
+  flex: 1 1 25%;
+  margin: 2rem;
+}
+
 .event {
   box-sizing: border-box;
   border: 0;
